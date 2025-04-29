@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { map, Observable } from 'rxjs';
 import { FestivosService } from './festivos.service';
+import { Festivos } from '../../shared/entidades/Festivo';
+
 
 @Component({
   selector: 'app-root',
@@ -31,6 +35,10 @@ export class AppComponent {
   idEliminar: number = 0;
 
   constructor(private festivosService: FestivosService) {}
+
+  ngOnInit() {
+    this.festivosService.listarTodos().subscribe();
+  }
 
   agregar() {
     this.festivosService.agregarFestivo(this.festivo).subscribe(() => {
@@ -69,4 +77,5 @@ export class AppComponent {
       alert('Festivo eliminado');
     });
   }
+
 }

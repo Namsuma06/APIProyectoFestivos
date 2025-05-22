@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+/*import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -11,4 +11,4 @@ import { FestivosService } from './festivos.service';
   providers: [FestivosService],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {}*/

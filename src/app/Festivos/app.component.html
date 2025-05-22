@@ -29,7 +29,7 @@
   <h2>Listar Todos los Festivos</h2>
   <button (click)="listarTodos()">Listar Todos</button>
 
-  <table *ngIf="todosFestivos.length > 0" border="1">
+  <table *ngIf="(lenght$ | async)> 0" border="1">
     <thead>
       <tr>
         <th>ID</th>
@@ -41,7 +41,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let festivo of todosFestivos">
+      <tr *ngFor="let festivo of (todosFestivos$ | async)">
         <td>{{ festivo.id }}</td>
         <td>{{ festivo.nombre }}</td>
         <td>{{ festivo.dia }}</td>
@@ -84,6 +84,18 @@
 
   <hr>
 
+  <h2>Validar Fecha como Festivo</h2>
+  <input [(ngModel)]="fechaValidar" type="date" placeholder="Seleccionar fecha" />
+  <button (click)="validarFecha()">Validar</button>
+
+  <div *ngIf="resultadoValidacion !== null">
+  <h3>Resultado:</h3>
+  <p *ngIf="resultadoValidacion">¡La fecha es festivo! </p>
+  <p *ngIf="!resultadoValidacion">No es un festivo. </p>
+  </div>
+
+  <hr>
+
   <h2>Modificar Festivo</h2>
   <input [(ngModel)]="idModificar" type="number" placeholder="ID a Modificar" />
   <button (click)="actualizarFestivo()">Modificar</button>
@@ -93,4 +105,6 @@
   <h2>Eliminar Festivo</h2>
   <input [(ngModel)]="idEliminar" type="number" placeholder="ID a Eliminar" />
   <button (click)="eliminarFestivo()">Eliminar</button>
+
+  <button mat-raised-button color="primary" (click)="irPaginaFestivo('tipo')">Ir a vista de Tipos</button>
 </div>

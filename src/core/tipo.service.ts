@@ -4,34 +4,31 @@ import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { Tipo } from '../shared/entidades/Tipo';
 import { environment } from '../environments/environment';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class TipoService {
-  private baseUrl = environment.baseUrl + '/tipo'; // URL base de la API
+
+  private baseUrl = `${environment.baseUrl}/tipo`; // URL base de la API
 
   constructor(private http: HttpClient) {}
 
-  private todosTipos = new BehaviorSubject<Tipo[]>([]);
-  listaTipos$ = this.todosTipos.asObservable();
-
-  agregarTipo(tipo: Tipo): Observable<any> {
-    return this.http.post(`${this.baseUrl}/agregar`, tipo);
+  listar(): Observable<Tipo[]> {
+    return this.http.get<Tipo[]>(`${this.baseUrl}/listar`);
   }
 
-  obtenerTipoPorId(id: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/obtener/${id}`);
+  obtenerTipoPorId(id: number): Observable<Tipo> {
+    return this.http.get<Tipo>(`${this.baseUrl}/obtener/${id}`);
   }
 
-  listarTodos(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/listar`).pipe(
-      tap(tipos => this.todosTipos.next(tipos))
-    );
+  agregarTipo(tipo: Tipo): Observable<Tipo> {
+    return this.http.post<Tipo>(`${this.baseUrl}/agregar`, tipo);
   }
 
-  actualizarTipo(id: number, tipo: Tipo): Observable<any> {
-    return this.http.put(`${this.baseUrl}/actualizar/${id}`, tipo);
+  actualizarTipo(id: number, tipo: Tipo): Observable<void> {
+    return this.http.put<void>(`${this.baseUrl}/modificar/${id}`, tipo);
   }
 
-  eliminarTipo(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/eliminar/${id}`);
+  eliminarTipo(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/eliminar/${id}`);
   }
+
 }

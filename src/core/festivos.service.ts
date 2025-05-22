@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
-import { Festivo } from '../shared/entidades/Festivo';
+import { Festivos } from '../shared/entidades/Festivo';
 import { environment } from '../environments/environment';
+import { FestivosportipoDtos } from '../shared/dto/FestivosportipoDto';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class FestivosService {
-  private baseUrl = environment.baseUrl + '/festivos'; // URL base de la API
+  private baseUrl = `${environment.baseUrl}/festivo`; // URL base de la API
 
-  
-  constructor(private http: HttpClient) {}
 
-  private todosFestivos = new BehaviorSubject(<Festivo[]>[]);
+  constructor(private http: HttpClient) { }
+
+  private todosFestivos = new BehaviorSubject(<Festivos[]>[]);
   listaFestivos$ = this.todosFestivos.asObservable();
 
 
@@ -23,17 +24,18 @@ export class FestivosService {
     return this.http.get(`${this.baseUrl}/obtener/${id}`);
   }
 
-  listarTodos(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/listar`);
-  }
+  listarTodos(): Observable<Festivos[]> {
+  return this.http.get<Festivos[]>(`${this.baseUrl}/listar`)
+    .pipe(tap(festivos => this.todosFestivos.next(festivos)));
+}
 
   buscarPorTipoYNombre(tipo: number, nombre: string): Observable<any> {
     return this.http.get(`${this.baseUrl}/buscar/?tipo=${tipo}&nombre=${nombre}`);
   }
 
-  validarFecha(dia: number, mes: number, anio: number): Observable<Festivo[]> {
-    return this.http.get<Festivo[]>(`${this.baseUrl}/validar?dia=${dia}&mes=${mes}&anio=${anio}`).pipe(
-      tap(festivos => this.todosFestivos.next(festivos) )
+  validarFecha(dia: number, mes: number, anio: number): Observable<Festivos[]> {
+    return this.http.get<Festivos[]>(`${this.baseUrl}/validar?dia=${dia}&mes=${mes}&anio=${anio}`).pipe(
+      tap(festivos => this.todosFestivos.next(festivos))
     );
   }
 
@@ -48,5 +50,9 @@ export class FestivosService {
   validarFechaCompleta(fecha: Date): Observable<any> {
     const fechaStr = fecha.toISOString(); //fecha en formato (año-mes-dia)
     return this.http.get(`${this.baseUrl}/validar?fecha=${fechaStr}`);
+  }
+
+  obtenerFestivosPorTipo(tipoId: number): Observable<FestivosportipoDtos[]> {
+    return this.http.get<FestivosportipoDtos[]>(`https://localhost:7238/api/Tipo/porTipo/${tipoId}`);
   }
 }

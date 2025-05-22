@@ -1,9 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AppComponent } from '../Festivos/app.component';
+import { AppFestivosComponent } from '../Festivos/app.component';
+import { AppTipoComponent } from './app.Tipo.component';
+
 
 const routes: Routes = [
-  { path: 'festivos', component: AppComponent },
+  { path: 'festivos', component: AppFestivosComponent },
+  { path: 'tipo', component: AppTipoComponent }
 ];
 
 @NgModule({

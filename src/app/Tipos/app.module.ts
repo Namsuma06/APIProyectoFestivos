@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+/*import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -20,4 +20,4 @@ import { TipoService } from '../../core/tipo.service'; // Mejor organizar los se
     AppTipoComponent
   ]
 })
-export class AppModule {}
+export class AppModule {}*/

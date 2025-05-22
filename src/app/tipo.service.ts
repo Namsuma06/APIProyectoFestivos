@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+/*import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -27,4 +27,4 @@ export class TiposService {
   eliminarTipo(id: number): Observable<any> {
     return this.http.delete(`${this.baseUrl}/eliminar/${id}`);
   }
-}
+}*/

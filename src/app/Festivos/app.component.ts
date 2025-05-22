@@ -1,8 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, input, OnInit } from '@angular/core';
+import { FestivosService } from '../../core/festivos.service';
+import { map, Observable, tap } from 'rxjs';
 import { Router } from '@angular/router';
-import { map, Observable } from 'rxjs';
-import { FestivosService } from './festivos.service';
-import { Festivos } from '../../shared/entidades/Festivo';
 
 
 @Component({
@@ -10,7 +9,7 @@ import { Festivos } from '../../shared/entidades/Festivo';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
+export class AppFestivosComponent implements OnInit {
   festivo = {
     id: 0,
     nombre: '',
@@ -25,20 +24,23 @@ export class AppComponent {
   };
 
   festivoConsultado: any;
-  todosFestivos: any[] = [];
+  todosFestivos$ = this.festivosService.listaFestivos$;
   festivosFiltrados: any[] = [];
-
   idConsulta: number = 0;
   tipoBusqueda: number = 0;
   nombreBusqueda: string = '';
   idModificar: number = 0;
   idEliminar: number = 0;
+  lenght$ = this.todosFestivos$.pipe(map(festivos => festivos.length));
+  fechaValidar: string = ''; // Inicializa con la fecha actual
+  resultadoValidacion: boolean | null = null;
+  constructor(private festivosService: FestivosService, private Router: Router) { }
 
-  constructor(private festivosService: FestivosService) {}
 
   ngOnInit() {
-    this.festivosService.listarTodos().subscribe();
+    this.festivosService.listarTodos().subscribe(); // Solo dispara la carga inicial
   }
+
 
   agregar() {
     this.festivosService.agregarFestivo(this.festivo).subscribe(() => {
@@ -53,10 +55,9 @@ export class AppComponent {
   }
 
   listarTodos() {
-    this.festivosService.listarTodos().subscribe(data => {
-      this.todosFestivos = data;
-    });
+    this.festivosService.listarTodos().subscribe();
   }
+
 
   buscarPorTipoYNombre() {
     this.festivosService.buscarPorTipoYNombre(this.tipoBusqueda, this.nombreBusqueda)
@@ -78,4 +79,27 @@ export class AppComponent {
     });
   }
 
+  validarFecha() {
+    console.log("empieza la validacion de la fecha", this.fechaValidar);
+    if (!this.fechaValidar) {
+      this.resultadoValidacion = null;
+      return;
+    }
+    const [anio, mes, dia] = this.fechaValidar.split('-').map(Number);
+    this.checkIfFestivoExists(dia, mes).subscribe(existe => {
+      this.resultadoValidacion = existe;
+    })
+  };
+
+  checkIfFestivoExists(dia: number, mes: number): Observable<boolean> {
+    return this.todosFestivos$.pipe(
+      map(festivos => festivos.some(festivo =>
+        festivo.dia === dia && festivo.mes === mes && festivo
+      ))
+    );
+  }
+
+  irPaginaFestivo(pagina: string): void {
+    this.Router.navigate([pagina]);
+  }
 }

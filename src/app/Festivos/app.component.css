@@ -2,14 +2,14 @@
   padding: 30px;
   max-width: 700px;
   margin: 40px auto;
-  background: #ffffff;
+  background: #0d9adb;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Palatino Linotype', 'Book Antiqua', Georgia, serif !important;
 }
 
 h1, h2 {
-  color: #333;
+  color: #ffffff;
   margin-bottom: 20px;
 }
 
@@ -27,7 +27,7 @@ input {
 button {
   margin-top: 10px;
   padding: 12px 20px;
-  background-color: #007bff;
+  background-color: #28a745;
   color: white;
   border: none;
   border-radius: 6px;
@@ -37,7 +37,7 @@ button {
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #218838;
 }
 
 pre {

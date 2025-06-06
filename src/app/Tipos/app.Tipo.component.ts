@@ -110,7 +110,7 @@ lenght$: any;
     });
   }
 
-  irPaginaFestivo(pagina: string): void {
+  irPaginaInicio(pagina: string): void {
     this.Router.navigate([pagina]);
   }
 }

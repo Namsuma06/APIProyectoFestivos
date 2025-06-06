@@ -98,8 +98,8 @@ export class AppFestivosComponent implements OnInit {
       ))
     );
   }
-
-  irPaginaFestivo(pagina: string): void {
+irPaginaInicio(pagina: string): void {
     this.Router.navigate([pagina]);
   }
+  
 }

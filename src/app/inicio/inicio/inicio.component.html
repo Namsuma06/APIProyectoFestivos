@@ -1,0 +1,25 @@
+<mat-sidenav-container class="contenedor">
+  <mat-sidenav #menuLateral mode="side" [(opened)]="isMenuAbierto" class="menu-lateral">
+    <mat-nav-list>
+      <div *ngFor="let opcion of opciones">
+        <div [routerLink]="opcion.url" class="menu-button" (click)="menuLateral.toggle()">
+          <img [src]="opcion.icono" alt="{{ opcion.titulo }}" width="24" height="24" />
+          {{ opcion.titulo }}
+        </div>
+      </div>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar class="barra-superior">
+      <button mat-icon-button (click)="menuLateral.toggle()">
+        <mat-icon>-> </mat-icon>
+      </button>
+      <span>Festivos del Año</span>
+    </mat-toolbar>
+
+    <div class="contenido-principal">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
